@@ -12,11 +12,10 @@ wakeFromDeepSleep = reset_cause() == DEEPSLEEP_RESET
 
 async def runnable():
     await conn(config["wifi"])
-    if wakeFromDeepSleep:
-        pumpOn()
-    detector = Detector(initCounter())
-    metrics = await detector.run(wakeFromDeepSleep)
-    pumpOff()
+    pumpOn(config["pump"])
+    detector = Detector(initCounter(), config["pump"]["safeTimeout"])
+    metrics = await detector.run()
+    pumpOff(config["pump"])
     flowResult = flows[config["flow"]["type"]](config["flow"], metrics)
     print(flowResult)
     print(metrics)

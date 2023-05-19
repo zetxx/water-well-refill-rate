@@ -1,4 +1,9 @@
-def on():
+def rq(config, state):
+    print(config["url"])
+    print(config["authorization"])
+def on(config):
     print("motor on")
-def off():
+    rq(config, "on")
+def off(config):
     print("motor off")
+    rq(config, "off")
