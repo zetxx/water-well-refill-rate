@@ -9,6 +9,6 @@ async def conn(ssid, key):
         wlan.connect(ssid, key)
         while True:
             if wlan.isconnected():
-                pass
+                break
             await sleep_ms(500)
     print('network config:', wlan.ifconfig())

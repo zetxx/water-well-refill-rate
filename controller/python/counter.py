@@ -1,13 +1,15 @@
-from uasyncio import sleep_ms
-from machine import Pin
-# from micropython import alloc_emergency_exception_buf
-# alloc_emergency_exception_buf(100)
+from uasyncio import sleep_ms, create_task
+from machine import Pin, disable_irq, enable_irq
+from micropython import alloc_emergency_exception_buf
+alloc_emergency_exception_buf(100)
 
 class Counter():
     count = 0
 
     def inc(self):
+        dir = disable_irq()
         self.count = self.count + 1
+        enable_irq(dir)
 
     def get(self):
         return self.count
@@ -23,8 +25,13 @@ def init():
     pin.irq(trigger=Pin.IRQ_FALLING, handler=lambda _: counter.inc())
     return counter
 
-async def get(counter, sleep = 0):
-    r = counter.reset()
+async def getAndSleepClear(counter, sleep = 0):
+    counter.reset()
     if sleep > 0:
         await sleep_ms(sleep)
-    return r
+    return counter.reset()
+
+async def sleepAndGet(counter, sleep = 0):
+    if sleep > 0:
+        await sleep_ms(sleep)
+    return counter.reset()
