@@ -1,1 +1,4 @@
-from uasyncio import sleep_ms, run
+from net import conn
+from config import get
+
+print(get)
