@@ -1,4 +1,5 @@
 from counter import sleepAndGet as counterSleepAndGet
+from time import time
 
 class Detector:
     metrics = {"rate": 0}
@@ -10,10 +11,12 @@ class Detector:
             rate1 = await counterSleepAndGet(self.counter, 1000)
             if rate1 > 1: # water detected for the first time, sleep for some time and check for water once again
                 print("1:Water First Time")
+                st = time()
                 rate2 = await counterSleepAndGet(self.counter, 3000)
                 if rate2 > 1: # water still flows
                     print("2:Water flow steady")
                     self.metrics["rate"] = rate1 + rate2
+                    self.metrics["ranFor"] = st
                     break
             print("3:No Water")
     async def waitForWaterStops(self):
@@ -21,9 +24,11 @@ class Detector:
             rate1 = await counterSleepAndGet(self.counter, 1000)
             if rate1 < 1: # no water detected for the first time, sleep for some time and check for water once again
                 print("5:No Water First Time")
+                ed = time()
                 rate2 = await counterSleepAndGet(self.counter, 3000)
                 if rate2 < 1: # no water
                     print("6:No Water flow")
+                    self.metrics["ranFor"] = ed - self.metrics["ranFor"]
                     break
             self.metrics["rate"] = self.metrics["rate"] + rate1
             print("7:Water Flows")

@@ -8,7 +8,7 @@ from detector import Detector
 from flows.main import flows
 
 async def runnable():
-    await conn(config["wifi"]["ssid"], config["wifi"]["password"])
+    await conn(config["wifi"])
     detector = Detector(initCounter())
     metrics = await detector.run()
     flowResult = flows[config["flow"]["type"]](config["flow"], metrics)
