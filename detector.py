@@ -5,7 +5,7 @@ class Detector:
     metrics = {"rate": 0}
     def __init__(self, counter):
         self.counter = counter
-    async def waitForWater(self):
+    async def waitForWater(self, waterOn):
         # detect water first
         while True:
             rate1 = await counterSleepAndGet(self.counter, 1000)
@@ -33,8 +33,8 @@ class Detector:
             self.metrics["rate"] = self.metrics["rate"] + rate1
             print("7:Water Flows")
 
-    async def run(self):
-        await self.waitForWater()
+    async def run(self, waterOn):
+        await self.waitForWater(waterOn)
         print("4:Waiting water stops")
         await self.waitForWaterStops()
         print("8:Water stopped, sleeping")
