@@ -1,7 +1,10 @@
-def get():
-    return {
-        "wifi": {
-            "ssid": "alabala",
-            "password": "123"
-        }
+config = {
+    "wifi": {
+        "ssid": "alabala",
+        "password": "123"
+    },
+    "flow": {
+        "type": "static",
+        "runAfter": 30
     }
+}
