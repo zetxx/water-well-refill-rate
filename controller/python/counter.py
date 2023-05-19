@@ -1,4 +1,4 @@
-from uasyncio import sleep_ms, run
+from uasyncio import sleep_ms
 from machine import Pin
 # from micropython import alloc_emergency_exception_buf
 # alloc_emergency_exception_buf(100)
@@ -17,13 +17,14 @@ class Counter():
         self.count = 0
         return cur
 
-async def count():
+def init():
     counter = Counter()
     pin = Pin(34, Pin.IN, pull=Pin.PULL_UP)
     pin.irq(trigger=Pin.IRQ_FALLING, handler=lambda _: counter.inc())
-    
-    while True:
-        print(counter.reset())
-        await sleep_ms(1000)
+    return counter
 
-# run(count())
+async def get(counter, sleep = 0):
+    r = counter.reset()
+    if sleep > 0:
+        await sleep_ms(sleep)
+    return r

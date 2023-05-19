@@ -1,11 +1,14 @@
-import network
+from network import WLAN, STA_IF
+from uasyncio import sleep_ms
 
-def conn(ssid, key):
-    wlan = network.WLAN(network.STA_IF)
+async def conn(ssid, key):
+    wlan = WLAN(STA_IF)
     wlan.active(True)
     if not wlan.isconnected():
         print('connecting to network...')
         wlan.connect(ssid, key)
-        while not wlan.isconnected():
-            pass
+        while True:
+            if wlan.isconnected():
+                pass
+            await sleep_ms(500)
     print('network config:', wlan.ifconfig())

@@ -1,4 +1,20 @@
+from uasyncio import run
 from net import conn
-from config import get
+import config
+import counter
 
-print(get)
+async def runnable():
+    await conn(config.get()["wifi"]["ssid"], config.get()["wifi"]["password"])
+    counterReady = counter.init()
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+    print(await counter.get(counter=counterReady, sleep=2000))
+
+run(runnable())
