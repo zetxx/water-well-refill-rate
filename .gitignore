@@ -1,0 +1,3 @@
+.sensitive
+nodejs/node_modules/**/*
+**/config.h

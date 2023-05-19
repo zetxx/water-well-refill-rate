@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+
+  water-well-refill-rate:
+    build: https://github.com/zetxx/water-well-refill-rate.git
+    container_name: water-well-refill-rate
+    ports:
+      - "3000:3000"
