@@ -1,7 +1,9 @@
 import urequests
 
 def rq(config, state):
-    r = urequests.get(config["url"] + state, headers={"authorization": config["authorization"]})
+    url = config["url"] + state
+    print(url)
+    r = urequests.get(url, headers={"authorization": config["authorization"]})
     r.close()
 def on(config):
     print("motor on")

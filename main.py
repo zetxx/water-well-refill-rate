@@ -1,5 +1,4 @@
 from uasyncio import run
-from time import sleep
 from net import conn
 from machine import deepsleep, reset_cause, DEEPSLEEP_RESET
 from config import config
@@ -7,7 +6,7 @@ from counter import init as initCounter
 from detector import Detector
 from pump import off as pumpOff, on as pumpOn
 from flows.main import flows
-from metrix import influxdb
+from metrics import influxdb
 
 wakeFromDeepSleep = reset_cause() == DEEPSLEEP_RESET
 
@@ -20,9 +19,8 @@ async def runnable():
     flowResult = flows[config["flow"]["type"]](config["flow"], mtrcs)
     print(flowResult)
     print(mtrcs)
-    # sleep(20)
+    influxdb(config["metrics"], config["sensorId"], mtrcs)
     print("sleep for: " + str(flowResult["runAfter"]))
-    influxdb(config["metrics"], mtrcs)
     deepsleep(flowResult["runAfter"] * 1000) # ms
 
 run(runnable())
