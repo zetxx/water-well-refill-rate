@@ -1,3 +1,4 @@
 .sensitive
 nodejs/node_modules/**/*
 **/config.*
+!**/config.example*
