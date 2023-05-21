@@ -1,6 +1,6 @@
-from uasyncio import run
+from uasyncio import run, sleep_ms
 from net import conn
-from machine import deepsleep, reset_cause, DEEPSLEEP_RESET
+from machine import deepsleep #, reset_cause, DEEPSLEEP_RESET
 from config import config
 from counter import init as initCounter
 from detector import Detector
@@ -8,10 +8,11 @@ from pump import off as pumpOff, on as pumpOn
 from flows.main import flows
 from metrics import influxdb
 
-wakeFromDeepSleep = reset_cause() == DEEPSLEEP_RESET
+# wakeFromDeepSleep = reset_cause() == DEEPSLEEP_RESET
 
 async def runnable():
-    await conn(config["wifi"])
+    await conn(config["wifi"]) # connect to ti wifi
+    await sleep_ms(30000) # sleep for 30 sec if someone tries to connect over serial
     pumpOn(config["pump"])
     detector = Detector(initCounter(), config["pump"]["safeTimeout"])
     mtrcs = await detector.run()

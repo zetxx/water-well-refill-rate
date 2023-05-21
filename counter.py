@@ -1,4 +1,4 @@
-from uasyncio import sleep_ms, create_task
+from uasyncio import sleep_ms
 from machine import Pin, disable_irq, enable_irq
 from micropython import alloc_emergency_exception_buf
 alloc_emergency_exception_buf(100)

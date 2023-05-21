@@ -26,11 +26,13 @@ class Detector:
     async def waitForWaterStops(self):
         while True:
             rate1 = await counterSleepAndGet(self.counter, 1000)
-            if rate1 < 1: # no water detected for the first time, sleep for some time and check for water once again
+            print("R1:" + str(rate1))
+            if rate1 < 7: # no water detected for the first time, sleep for some time and check for water once again
                 print("4:No Water First Time")
                 ed = time()
-                rate2 = await counterSleepAndGet(self.counter, 3000)
-                if rate2 < 1: # no water
+                rate2 = await counterSleepAndGet(self.counter, 2000)
+                print("R2:" + str(rate2))
+                if rate2 < 12: # no water
                     print("5:No Water flow")
                     self.metrics["ranFor"] = ed - self.metrics["ranFor"]
                     break
