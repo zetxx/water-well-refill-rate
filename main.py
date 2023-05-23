@@ -25,8 +25,7 @@ async def runnable():
     flowResult = flows[config["flow"]["type"]](config["flow"], mtrcs)
     print(flowResult)
     print(mtrcs)
-    print(pm())
-    influxdb(config["metrics"], config["sensorId"], mtrcs)
+    influxdb(config["metrics"], config["sensorId"], mtrcs, pm())
     print("sleep for: " + str(flowResult["runAfter"]))
     deepsleep(flowResult["runAfter"] * 1000) # ms
 
