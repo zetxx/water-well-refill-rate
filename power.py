@@ -17,11 +17,12 @@ def read(x40, x44):
     r["x44"]["p"] = x44.power()
     x40.sleep()
     x44.sleep()
+    return r
 
 def power():
     i2c = I2C(-1, scl=Pin(22), sda=Pin(23))
     x40 = INA219(SHUNT_OHMS, i2c, log_level=INFO, address=0x40)
-    x40.configure()
     x44 = INA219(SHUNT_OHMS, i2c, log_level=INFO, address=0x44)
+    x40.configure()
     x44.configure()
     return lambda : read(x40, x44)

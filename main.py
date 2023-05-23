@@ -7,6 +7,7 @@ from detector import Detector
 from pump import off as pumpOff, on as pumpOn
 from flows.main import flows
 from metrics import influxdb
+from power import power
 
 ENV = "dev"
 config = conf[ENV]
@@ -15,6 +16,7 @@ config = conf[ENV]
 
 async def runnable():
     await conn(config["wifi"]) # connect to ti wifi
+    pm = power()
     await sleep_ms(config["waitForRepl"] * 1000) # sleep for 30 sec if someone tries to connect over serial
     await pumpOn(config["pump"])
     detector = Detector(initCounter(), config["pump"]["safeTimeout"])
@@ -23,6 +25,7 @@ async def runnable():
     flowResult = flows[config["flow"]["type"]](config["flow"], mtrcs)
     print(flowResult)
     print(mtrcs)
+    print(pm())
     influxdb(config["metrics"], config["sensorId"], mtrcs)
     print("sleep for: " + str(flowResult["runAfter"]))
     deepsleep(flowResult["runAfter"] * 1000) # ms

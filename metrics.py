@@ -17,7 +17,6 @@ def influxdb(config, sensorId, data):
         rqdata += "\nranFor,sensorId=" + sensorId + " value=" + str(data["ranFor"]) + " "+ ts.text
         ts.close()
         r = urequests.post(url, headers=headers, data=rqdata)
-        print(r.text)
         r.close()
     except:
         print("metrics request error")
