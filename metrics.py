@@ -16,9 +16,11 @@ def influxdb(config, sensorId, data, powerData):
         rqdata = "rate,sensorId=" + sensorId + ",pump=1 value=" + str(data["rate"]) + " " + ts.text
         rqdata += "\nranFor,sensorId=" + sensorId + ",pump=1 value=" + str(data["ranFor"]) + " "+ ts.text
         rqdata += "\nV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["v"]) + " "+ ts.text
+        rqdata += "\nSV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["sv"]) + " "+ ts.text
         rqdata += "\nA,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["a"]) + " "+ ts.text
         rqdata += "\nW,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["p"]) + " "+ ts.text
         rqdata += "\nV,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["v"]) + " "+ ts.text
+        rqdata += "\nSV,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["sv"]) + " "+ ts.text
         rqdata += "\nA,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["a"]) + " "+ ts.text
         rqdata += "\nW,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["p"]) + " "+ ts.text
         ts.close()
