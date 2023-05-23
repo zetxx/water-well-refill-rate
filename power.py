@@ -1,4 +1,4 @@
-from machine import Pin, I2C
+from machine import Pin, I2C, SoftI2C
 from ina219 import INA219
 from logging import INFO
 
@@ -22,7 +22,7 @@ def read(x40, x44):
     return r
 
 def power():
-    i2c = I2C(-1, scl=Pin(22), sda=Pin(23))
+    i2c = SoftI2C(scl=Pin(22), sda=Pin(23))
     x40 = INA219(SHUNT_OHMS, i2c, log_level=INFO, address=0x40)
     x44 = INA219(SHUNT_OHMS, i2c, log_level=INFO, address=0x44)
     x40.configure()
