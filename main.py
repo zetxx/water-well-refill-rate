@@ -1,12 +1,15 @@
 from uasyncio import run, sleep_ms
 from net import conn
 from machine import deepsleep #, reset_cause, DEEPSLEEP_RESET
-from config import config
+from config import config as conf
 from counter import init as initCounter
 from detector import Detector
 from pump import off as pumpOff, on as pumpOn
 from flows.main import flows
 from metrics import influxdb
+
+ENV = "dev"
+config = conf[ENV]
 
 # wakeFromDeepSleep = reset_cause() == DEEPSLEEP_RESET
 
