@@ -13,8 +13,8 @@ def influxdb(config, sensorId, data, powerData):
     print(url)
     try:
         ts = urequests.get(config["timestamp"]["url"])
-        rqdata = "rate,sensorId=" + sensorId + " value=" + str(data["rate"]) + " " + ts.text
-        rqdata += "\nranFor,sensorId=" + sensorId + " value=" + str(data["ranFor"]) + " "+ ts.text
+        rqdata = "rate,sensorId=" + sensorId + ",pump=1 value=" + str(data["rate"]) + " " + ts.text
+        rqdata += "\nranFor,sensorId=" + sensorId + ",pump=1 value=" + str(data["ranFor"]) + " "+ ts.text
         rqdata += "\nV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["v"]) + " "+ ts.text
         rqdata += "\nA,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["a"]) + " "+ ts.text
         rqdata += "\nW,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["p"]) + " "+ ts.text
