@@ -1,13 +1,18 @@
 import urequests
-
-def rq(config, state):
+from uasyncio import sleep_ms
+async def rq(config, state):
     url = config["url"] + state
     print(url)
-    r = urequests.get(url, headers={"authorization": config["authorization"]})
-    r.close()
-def on(config):
+    try:
+        r = urequests.get(url, headers={"authorization": config["authorization"]})
+        r.close()
+    except:
+        print("Can't find pump")
+        sleep_ms(1000)
+        await rq(config, state)
+async def on(config):
     print("motor on")
-    rq(config, "on")
-def off(config):
+    await rq(config, "on")
+async def off(config):
     print("motor off")
-    rq(config, "off")
+    await rq(config, "off")

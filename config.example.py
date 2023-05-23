@@ -1,5 +1,6 @@
 config = {
     "sensorId": "selqnin1",
+    "waitForRepl": 30,
     "wifi": {
         "ssid": "your ssid",
         "password": "your ssid's password",

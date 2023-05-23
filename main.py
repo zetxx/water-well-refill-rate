@@ -12,11 +12,11 @@ from metrics import influxdb
 
 async def runnable():
     await conn(config["wifi"]) # connect to ti wifi
-    await sleep_ms(30000) # sleep for 30 sec if someone tries to connect over serial
-    pumpOn(config["pump"])
+    await sleep_ms(config["waitForRepl"] * 1000) # sleep for 30 sec if someone tries to connect over serial
+    await pumpOn(config["pump"])
     detector = Detector(initCounter(), config["pump"]["safeTimeout"])
     mtrcs = await detector.run()
-    pumpOff(config["pump"])
+    await pumpOff(config["pump"])
     flowResult = flows[config["flow"]["type"]](config["flow"], mtrcs)
     print(flowResult)
     print(mtrcs)
