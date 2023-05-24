@@ -8,6 +8,7 @@ class RetryLimitExceeded(Exception):
 async def conn(config):
     wlan = WLAN(STA_IF)
     wlan.active(True)
+    wlan.config(dhcp_hostname="pumpctrl")
     retry = config["retry"]
     if not wlan.isconnected():
         print('connecting to network...')
