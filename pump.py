@@ -4,7 +4,7 @@ async def rq(config, state):
     url = config["url"] + state
     print(url)
     try:
-        r = urequests.get(url, headers={"authorization": config["authorization"]})
+        r = urequests.get(url, headers={"authorization": config["authorization"]}, timeout=10.0)
         r.close()
     except:
         print("Can't find pump")

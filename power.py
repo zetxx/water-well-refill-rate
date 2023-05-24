@@ -1,6 +1,6 @@
-from machine import Pin, I2C, SoftI2C
+from machine import Pin, SoftI2C
 from ina219 import INA219
-from logging import INFO
+from logging import ERROR
 
 SHUNT_OHMS = 0.1
 # [64, 68]
@@ -23,8 +23,8 @@ def read(x40, x44):
 
 def power():
     i2c = SoftI2C(scl=Pin(22), sda=Pin(23))
-    x40 = INA219(SHUNT_OHMS, i2c, log_level=INFO, address=0x40)
-    x44 = INA219(SHUNT_OHMS, i2c, log_level=INFO, address=0x44)
-    x40.configure()
-    x44.configure()
+    x40 = INA219(SHUNT_OHMS, i2c, log_level=ERROR, address=0x40)
+    x44 = INA219(SHUNT_OHMS, i2c, log_level=ERROR, address=0x44)
+    x40.configure(INA219.RANGE_16V, bus_adc=INA219.ADC_32SAMP, shunt_adc=INA219.ADC_32SAMP)
+    x44.configure(INA219.RANGE_16V, bus_adc=INA219.ADC_32SAMP, shunt_adc=INA219.ADC_32SAMP)
     return lambda : read(x40, x44)

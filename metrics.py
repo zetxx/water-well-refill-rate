@@ -2,7 +2,7 @@ import urequests
 from time import time
 
  # https://docs.influxdata.com/influxdb/cloud/api/
-def influxdb(config, sensorId, data, powerData):
+def influxdb(config, sensorId, data):
     print("send metrics")
     qs = "org=" + config["org"]
     qs += "&bucket=" + config["bucket"]
@@ -12,19 +12,19 @@ def influxdb(config, sensorId, data, powerData):
     url = config["url"] + "/api/v" + config["version"] + "/write?" + qs
     print(url)
     try:
-        ts = urequests.get(config["timestamp"]["url"])
+        ts = urequests.get(config["timestamp"]["url"], timeout=10.0)
         rqdata = "rate,sensorId=" + sensorId + ",pump=1 value=" + str(data["rate"]) + " " + ts.text
         rqdata += "\nranFor,sensorId=" + sensorId + ",pump=1 value=" + str(data["ranFor"]) + " "+ ts.text
-        rqdata += "\nV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["v"]) + " "+ ts.text
-        rqdata += "\nSV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["sv"]) + " "+ ts.text
-        rqdata += "\nA,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["a"]) + " "+ ts.text
-        rqdata += "\nW,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["p"]) + " "+ ts.text
-        rqdata += "\nV,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["v"]) + " "+ ts.text
-        rqdata += "\nSV,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["sv"]) + " "+ ts.text
-        rqdata += "\nA,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["a"]) + " "+ ts.text
-        rqdata += "\nW,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["p"]) + " "+ ts.text
+        # rqdata += "\nV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["v"]) + " "+ ts.text
+        # rqdata += "\nSV,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["sv"]) + " "+ ts.text
+        # rqdata += "\nA,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["a"]) + " "+ ts.text
+        # rqdata += "\nW,sensorId=" + sensorId + ",power=x40 value=" + str(powerData["x40"]["p"]) + " "+ ts.text
+        # rqdata += "\nV,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["v"]) + " "+ ts.text
+        # rqdata += "\nSV,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["sv"]) + " "+ ts.text
+        # rqdata += "\nA,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["a"]) + " "+ ts.text
+        # rqdata += "\nW,sensorId=" + sensorId + ",power=x44 value=" + str(powerData["x44"]["p"]) + " "+ ts.text
         ts.close()
-        r = urequests.post(url, headers=headers, data=rqdata)
+        r = urequests.post(url, headers=headers, data=rqdata, timeout=10.0)
         r.close()
     except:
         print("metrics request error")
