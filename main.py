@@ -18,7 +18,7 @@ i2c = SoftI2C(scl=Pin(22), sda=Pin(23))
 async def runnable():
     await conn(config["wifi"]) # connect to ti wifi
     pm = power(i2c) # get fn for power readings
-    metricsPower = pm();
+    metricsPower = await pm();
     await sleep_ms(config["waitForRepl"] * 1000) # sleep for 30 sec if someone tries to connect over serial
     await pumpOn(config["pump"])
     detector = Detector(initCounter(), config["pump"]["safeTimeout"])
