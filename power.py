@@ -1,4 +1,3 @@
-from machine import Pin, SoftI2C
 from ina219 import INA219
 from logging import ERROR
 
@@ -21,10 +20,13 @@ def read(x40, x44):
     x44.sleep()
     return r
 
-def power():
-    i2c = SoftI2C(scl=Pin(22), sda=Pin(23))
-    x40 = INA219(SHUNT_OHMS, i2c, log_level=ERROR, address=0x40)
-    x44 = INA219(SHUNT_OHMS, i2c, log_level=ERROR, address=0x44)
-    x40.configure(INA219.RANGE_16V, bus_adc=INA219.ADC_32SAMP, shunt_adc=INA219.ADC_32SAMP)
-    x44.configure(INA219.RANGE_16V, bus_adc=INA219.ADC_32SAMP, shunt_adc=INA219.ADC_32SAMP)
-    return lambda : read(x40, x44)
+def power(i2c):
+    try:
+        x40 = INA219(SHUNT_OHMS, i2c, log_level=ERROR, address=0x40)
+        x44 = INA219(SHUNT_OHMS, i2c, log_level=ERROR, address=0x44)
+        x40.configure(INA219.RANGE_16V, bus_adc=INA219.ADC_32SAMP, shunt_adc=INA219.ADC_32SAMP)
+        x44.configure(INA219.RANGE_16V, bus_adc=INA219.ADC_32SAMP, shunt_adc=INA219.ADC_32SAMP)
+        read(x40, x44)
+        return lambda : read(x40, x44)
+    except:
+        return lambda : {"x40": {"v": 0, "sv": 0, "a": 0, "p": 0}, "x44": {"v": 0, "sv": 0, "a": 0, "p": 0}}
