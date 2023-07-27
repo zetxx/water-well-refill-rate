@@ -8,8 +8,6 @@ async def rq(config, state):
         r.close()
     except:
         print("Can't find pump")
-        sleep_ms(1000)
-        await rq(config, state)
 async def on(config):
     print("motor on")
     await rq(config, "on")

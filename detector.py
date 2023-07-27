@@ -3,9 +3,11 @@ from time import time
 
 class Detector:
     metrics = {"rate": 0, "ranFor": 0}
+
     def __init__(self, counter, safeTime):
         self.counter = counter
         self.safeTime = safeTime
+
     async def waitForWater(self):
         # detect water first
         noWaterTime = time() + self.safeTime
@@ -23,6 +25,7 @@ class Detector:
             if noWaterTime < time():
                 break
             print("3:No Water")
+
     async def waitForWaterStops(self):
         while True:
             rate1 = await counterSleepAndGet(self.counter, 1000)
