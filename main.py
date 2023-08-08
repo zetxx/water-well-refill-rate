@@ -20,7 +20,7 @@ powerLine.value(1)
 led.value(1)
 
 # wakeFromDeepSleep = reset_cause() == DEEPSLEEP_RESET
-i2c = SoftI2C(scl=Pin(22), sda=Pin(23))
+i2c = SoftI2C(scl=Pin(23), sda=Pin(22))
 async def runnable():
     try:
         await conn(config["wifi"]) # connect to ti wifi

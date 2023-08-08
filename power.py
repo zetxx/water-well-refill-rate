@@ -17,8 +17,6 @@ def read(x40, x44):
         r["x44"]["sv"] = x44.shunt_voltage()
         r["x44"]["a"] = x44.current()
         r["x44"]["p"] = x44.power()
-        x40.sleep()
-        x44.sleep()
         return r
     return read_
 async def dummyRead():
