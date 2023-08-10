@@ -8,6 +8,8 @@ from pump import off as pumpOff, on as pumpOn
 from flows.main import flows
 from metrics import influxdb
 from power import power
+import ugit
+
 import env
 ENV = env.get()
 config = conf[ENV]
@@ -26,6 +28,7 @@ async def runnable():
         await conn(config["wifi"]) # connect to ti wifi
     except:
         deepsleep(600 * 1000) # ms
+    ugit.pull_all()
     pm = power(i2c) # get fn for power readings
     metricsPower = await pm()
     await sleep_ms(config["waitForRepl"] * 1000) # sleep for 30 sec if someone tries to connect over serial
