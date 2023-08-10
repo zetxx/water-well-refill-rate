@@ -1,7 +1,8 @@
-import env
+from uasyncio import run
 import ugit
-from config import config as conf
+import env
 from net import conn
+from config import config as conf
 
 ENV = env.get()
 config = conf[ENV]
