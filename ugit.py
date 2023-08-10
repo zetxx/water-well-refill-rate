@@ -32,7 +32,7 @@ default_branch = 'master'
 
 # Don't remove ugit.py from the ignore_files unless you know what you are doing :D
 # Put the files you don't want deleted or updated here use '/filename.ext'
-ignore_files = ['/ugit.py', '/test/i2c/inna/scan/main.py', '/test/water-detector/main.py', '.gitignore', '/config.example.py', '/ina219.py']
+ignore_files = ['/ugit.py', '/test/i2c/inna/scan/main.py', '/test/water-detector/main.py', '.gitignore', '/config.example.py', '/ina219.py', '/config.py', '/.env']
 ignore = ignore_files
 ### -----------END OF USER VARIABLES ----------####
 
