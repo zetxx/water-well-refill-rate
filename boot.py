@@ -1,3 +1,4 @@
+from network import WLAN, STA_IF
 import ugit
 import env
 from config import config as conf
@@ -7,7 +8,11 @@ config = conf[ENV]
 print("ENV: " + ENV)
 
 
-wlan = network.WLAN(network.STA_IF)
+wlan = WLAN(STA_IF)
 wlan.active(True)
+wlan.config(dhcp_hostname="pumpctrl")
 wlan.connect(config["wifi"]["ssid"], config["wifi"]["password"])
-ugit.pull_all(isconnected=True)
+while not wlan.isconnected():
+    pass
+print(wlan.ifconfig())
+# ugit.pull_all(isconnected=True)
