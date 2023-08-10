@@ -14,8 +14,7 @@ async def runnable():
         await conn(config["wifi"]) # connect to ti wifi
     except:
         deepsleep(600 * 1000) # ms
+    # ugit.backup()
+    ugit.pull_all()
 
 run(runnable())
-
-# ugit.backup()
-ugit.pull_all()
